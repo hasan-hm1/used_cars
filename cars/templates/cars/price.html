@@ -1,0 +1,459 @@
+{% extends 'cars/base.html'%}
+{% load static %}
+
+
+{% block content%}
+
+
+<!-- to prevent resend post on refresh -->
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>
+
+
+
+<script src="{% static 'cars/js/jquery-1.11.1.min.js'%}"></script>
+
+<script>
+    $(document).ready(function () {
+
+        $("#model").change(function () {
+            var val = $(this).val();
+            if (val == "4") {
+                $("#production_year").html("<option value='2006'>2006</option><option value='2007'>2007</option><option value='2008'>2008</option><option value='2009'>2009</option><option value='2010'>2010</option><option value='2011'>2011</option>");
+            } else if (val == "2") {
+                $("#production_year").html("<option value='2007'>2007</option><option value='2008'>2008</option><option value='2009'>2009</option>");
+            } else if (val == "3") {
+                $("#production_year").html("<option value='2009'>2009</option>");
+            } else if (val == "1") {
+                $("#production_year").html("<option value='2006'>2006</option><option value='2007'>2007</option><option value='2008'>2008</option><option value='2009'>2009</option><option value='2010'>2010</option><option value='2011'>2011</option>");
+            } else if (val == "0") {
+                $("#production_year").html("<option value='2007'>2007</option><option value='2008'>2008</option><option value='2009'>2009</option>");
+            } else if (val == "") {
+                $("#production_year").html("<option value=''>سنة الصنع</option>");
+            }
+        });
+
+
+
+    });
+
+
+</script>
+
+<script>
+
+    function extraFeatures(production_year, model) {
+        if (production_year == '2008') {
+            if (model == '4' || model == '1' || model == '2' || model == '0') {
+
+                $('#steering_control').prop('checked', false);
+                // $('#digital_condition').prop('checked', false);
+                // $('#air_bags').prop('checked', false);
+
+
+                $('#steering_control').attr('disabled', true);
+
+                $('#digital_condition').attr('disabled', false);
+                $('#air_bags').attr('disabled', false);
+
+
+
+
+            }
+        }
+        else if (production_year == '2007' || production_year == '2006') {
+
+            if (model == '4' || model == '1' || model == '2' || model == '0') {
+
+
+                $('#steering_control').prop('checked', false);
+                $('#digital_condition').prop('checked', false);
+                $('#air_bags').prop('checked', false);
+
+                $('#steering_control').attr('disabled', true);
+                $('#digital_condition').attr('disabled', true);
+                $('#air_bags').attr('disabled', true);
+
+
+            }
+        }
+
+        else {
+
+            $('#steering_control').attr('disabled', false);
+            $('#digital_condition').attr('disabled', false);
+            $('#air_bags').attr('disabled', false);
+
+        }
+
+    }
+    $(document).ready(function () {
+        $("#production_year").change(function () {
+            extraFeatures($('#production_year').val(), $('#model').val());
+
+        });
+        $("#model").change(function () {
+            extraFeatures($('#production_year').val(), $('#model').val());
+
+        });
+
+    });
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        $("#brand").change(function () {
+            var val = $(this).val();
+            if (val == "كيا") {
+                $("#model").html("<option value=''>الموديل</option><option value='4'>ريو</option><option value='2'>سيراتو</option><option value='3'>فورتي</option>");
+            } else if (val == "هيونداي") {
+                $("#model").html("<option value=''>الموديل</option><option value='1'>فيرنا</option><option value='0'>أفانتي</option>");
+            } else if (val == "") {
+                $("#model").html("<option value=''>الموديل</option>");
+                $("#production_year").html("<option value=''>سنة الصنع</option>");
+            }
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<form id='price-form' enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <!-- fisrt row -->
+    <div class="row">
+
+        <!-- start col  -->
+
+
+
+
+
+        <!-- col 1 -->
+
+        <div class="col-md-6 mx-auto">
+            <div class="card pt-2 pb-4 mb-4">
+
+                <span class="search-text mx-auto mb-4 mt-2">المعلومات الأساسية</span>
+
+                <select id='brand' class="custom-select  btn btn-dark select-style dp-width300 mb-2 mx-auto" dir="rtl"
+                    name='brand' oninvalid="this.setCustomValidity('من فضلك اختر الشركة المصنعة')"
+                    oninput="setCustomValidity('')" required>
+                    <option value='' selected>الشركة المصنعة</option>
+                    <option value="كيا">كيا</option>
+                    <option value="هيونداي">هيونداي</option>
+
+
+                </select>
+
+
+
+                <select name='model' id='model'
+                    class="custom-select  btn btn-dark select-style dp-width300 mb-2 mx-auto" dir="rtl"
+                    oninvalid="this.setCustomValidity('من فضلك اختر الموديل')" oninput="setCustomValidity('')" required>
+                    <option value='' selected>الموديل</option>
+                </select>
+
+
+
+
+
+                <select class="mr-3 custom-select btn btn-dark select-style dp-width300 mx-auto mb-2" dir="rtl"
+                    name='production_year' id='production_year'
+                    oninvalid="this.setCustomValidity('من فضلك اختر سنة الصنع')" oninput="setCustomValidity('')"
+                    required>
+                    <option value='' selected>سنة الصنع</option>
+                    <!-- <option value="2007">2007</option>
+                    <option value="2008">2008</option>
+                    <option value="2009">2009</option>
+                    <option value="2010">2010</option>
+                    <option value="2011">2011</option>
+                    <option value="2012">2012</option> -->
+
+                </select>
+
+
+
+
+
+                <select class="custom-select  btn btn-dark select-style dp-width300 mb-2 mx-auto" dir="rtl"
+                    name='technical_status' id='technical_status'
+                    oninvalid="this.setCustomValidity('من فضلك اختر الحالة الفنية')" oninput="setCustomValidity('')"
+                    required>
+                    <option value='' selected>الحالة الفنية</option>
+                    <option value="1">ممتازة</option>
+                    <option value="2">جيدة</option>
+                    <option value="0">سيئة</option>
+                </select>
+
+                <select class="custom-select  btn btn-dark select-style dp-width300 mb-2 mx-auto" dir="rtl"
+                    name='transmission_type' id='transmission_type'
+                    oninvalid="this.setCustomValidity('من فضلك اختر نوع ناقل الحركة')" oninput="setCustomValidity('')"
+                    required>
+                    <option value='' selected>نوع ناقل الحركة</option>
+                    <option value="1">عادي</option>
+                    <option value="0">أوتوماتيك</option>
+                </select>
+
+                <input name='kilometer' type="number" dir='rtl' style="width:300px"
+                    class="form-control mx-auto dp-width300" id="kilometer" placeholder="الكيلومترات"
+                    oninvalid="this.setCustomValidity('من فضلك أدخل الكيلومترات')" oninput="setCustomValidity('')"
+                    required>
+
+
+            </div>
+
+            <!-- end col -->
+        </div>
+
+        <!-- end fisrt row -->
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card pt-2 pb-4 pr-4 mb-4">
+
+                <span class="search-text mx-auto mb-4 mt-2">ميزات إضافية</span>
+
+                <div class="form-check ml-auto">
+                    <label class="form-check-label" for="sun_roof">
+                        فتحة سقف
+                    </label>
+                    <input class="form-check-input-reverse" name="sun_roof" type="checkbox" value="1" id="sun_roof">
+                </div>
+
+                <div class="form-check ml-auto">
+                    <label class="form-check-label" for="abs_breakers">
+                        ABS فرامل
+                    </label>
+                    <input class="form-check-input-reverse" name="abs_breakers" type="checkbox" value="1"
+                        id="abs_breakers">
+                </div>
+
+
+
+                <div class="form-check ml-auto">
+                    <label class="form-check-label" for="digital_condition">
+                        مكيف ديجيتال
+                    </label>
+                    <input class="form-check-input-reverse" name="digital_condition" type="checkbox" value="1"
+                        id="digital_condition">
+                </div>
+
+                <div class="form-check ml-auto">
+                    <label class="form-check-label" for="steering_control">
+                        تحكم مقود
+                    </label>
+                    <input class="form-check-input-reverse" name="steering_control" type="checkbox" value="1"
+                        id="steering_control">
+                </div>
+
+
+
+
+                <div class="form-check ml-auto">
+                    <label class="form-check-label" for="air_bags">
+                        وسائد هوائية
+                    </label>
+                    <input class="form-check-input-reverse" name="air_bags" type="checkbox" value="1" id="air_bags">
+                </div>
+
+
+
+                <div class="form-check ml-auto">
+                    <label class="form-check-label" for="chrome_wheel">
+                        جنط كروم
+                    </label>
+                    <input class="form-check-input-reverse" name="chrome_wheel" type="checkbox" value="1"
+                        id="chrome_wheel">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4 pb-4 mx-auto">
+
+        <button class="btn btn-outline-primary mx-auto" type="submit">سعر سيارتي</button>
+
+    </div>
+
+</form>
+
+<!-- <script src="{% static 'cars/js/sweetalert.min.js'%}"></script> -->
+<script src="{% static 'cars/js/sweetalert2.all.min.js' %}"></script>
+<script>
+    $(document).on('submit', '#price-form', function (e) {
+        e.preventDefault();
+        $('#loadingmessage').show();
+
+
+        var sun_roof = 0;
+        var abs_breakers = 0;
+        var digital_condition = 0;
+        var steering_control = 0;
+        var air_bags = 0;
+        var chrome_wheel = 0;
+
+
+        if (document.getElementById('sun_roof').checked) {
+            sun_roof = 1;
+        }
+        if (document.getElementById('abs_breakers').checked) {
+            abs_breakers = 1;
+        }
+        if (document.getElementById('digital_condition').checked) {
+            digital_condition = 1;
+        }
+        if (document.getElementById('steering_control').checked) {
+            steering_control = 1;
+        }
+        if (document.getElementById('air_bags').checked) {
+            air_bags = 1;
+        }
+        if (document.getElementById('chrome_wheel').checked) {
+            chrome_wheel = 1;
+        }
+        data = {
+            brand: $('#brand').val(),
+            model: $('#model').val(),
+            production_year: $('#production_year').val(),
+            technical_status: $('#technical_status').val(),
+            transmission_type: $('#transmission_type').val(),
+            kilometer: $('#kilometer').val(),
+            sun_roof: sun_roof,
+            abs_breakers: abs_breakers,
+            digital_condition: digital_condition,
+            steering_control: steering_control,
+            air_bags: air_bags,
+            chrome_wheel: chrome_wheel,
+            csrfmiddlewaretoken: $('input[name = csrfmiddlewaretoken]').val(),
+        }
+
+        $.ajax({
+            type: 'POST',
+            async: true,
+            url: "{% url 'cars-price' %}",
+
+            dataType: "json",
+            data: data,
+
+            success: function (json) {
+
+
+
+
+
+                if (json.min_price.toString() == 'false') {
+                    Swal.fire(
+                        json.price.toString(),
+                        'ليرة سورية',
+                        'success'
+                    )
+                } else {
+                    var message1 = 'سعر سيارتك يتراوح بين ' + json.min_price.toString() +
+                        ' ' + 'و ' + json.max_price.toString();
+                    message2 = 'و السعر المقدر هو ' + '<b>' + json.price.toString() + '</b>';
+                    // Swal.fire(
+                    //     message1,
+                    //     message2,
+                    //     'success'
+                    // )
+
+                    Swal.fire({
+                        // title: '<strong>HTML <u>example</u></strong>',
+                        type: 'success',
+                        html:
+                           '<strong>' + message1 + '<br>' +   message2 
+                            + ' ليرة سورية' + '</strong>',
+
+
+                        // showCloseButton: true,
+                        // showCancelButton: true,
+                        // focusConfirm: false,
+                        // confirmButtonText:
+                        //     '<i class="fa fa-thumbs-up"></i> Great!',
+                        // confirmButtonAriaLabel: 'Thumbs up, great!',
+                        // cancelButtonText:
+                        //     '<i class="fa fa-thumbs-down"></i>',
+                        // cancelButtonAriaLabel: 'Thumbs down',
+                    })
+                }
+                console.log(json.array)
+
+
+
+
+                // console.log(json.price.toString());
+                $('#loadingmessage').hide();
+                console.log(json.server_data)
+
+            },
+            error: function () {
+
+            }
+
+        });
+        console.log(data);
+
+    });
+</script>
+
+<div class="row mx-auto">
+    <div id='loadingmessage' style='display:none' class="mx-auto">
+        <img src="{% static 'cars/img/ajax-loader.gif'%}" class="center" />
+    </div>
+</div>
+
+
+<!-- <div style='display:auto'>
+    <button id="b-show">
+        show
+    </button>
+    <button id='b-hide'>
+        hide
+    </button>
+</div> -->
+<!-- <script>
+    $(document).ready(function () {
+        $(function () {
+            $('#b-show').click(function () {
+                $('#loadingmessage').show();
+            });
+        });
+
+        $(function () {
+            $('#b-hide').click(function () {
+                $('#loadingmessage').hide();
+            });
+        });
+    })
+
+
+</script> -->
+
+{% endblock content%}
+
+
+
+{% block footer%}
+
+<div class="footer pt-4 pb-4 mt-4">
+    <span class="footer-text center">All rights reserved</span>
+</div>
+
+
+{% endblock footer%}

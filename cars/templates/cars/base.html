@@ -1,0 +1,184 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'cars/css/bootstrap.min.css'%}">
+    <!-- <link rel="stylesheet" href="{% static 'cars/css/fontawesome.min.css'%}"> -->
+    <link rel="stylesheet" href="{% static 'cars/css/main.css'%}">
+
+    {% if title %}
+    <title>{{ title }}</title>
+    {% else %}
+    <title>Car Store</title>
+    {% endif %}
+</head>
+
+<body>
+
+
+
+
+    <!-- nav bar -->
+
+    <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <ul class="nav navbar-nav mr-auto">
+                <li class="nav-item">
+                    {% if user.is_authenticated %}
+                    {% if active|stringformat:"s" == 'logout'|stringformat:"s" %}
+                    <a class="nav-link link-pink active" href="{% url 'cars-logout' %}">تسجيل الخروج</a>
+                    {% else %}
+                    <a class="nav-link link-pink" href="{% url 'cars-logout' %}">تسجيل الخروج</a>
+                    {% endif %}
+                    {% else %}
+
+                    {% if active|stringformat:"s" == 'login'|stringformat:"s" %}
+                    <a class="nav-link link-pink active" href="{% url 'cars-login' %}">تسجيل الدخول</a>
+                    {% else %}
+                    <a class="nav-link link-pink" href="{% url 'cars-login' %}">تسجيل الدخول</a>
+                    {% endif %}
+
+                    {% endif %}
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item avatar ml-2">
+                    <a class="nav-link p-0" href="{% url 'profile' %}">
+                        <img src=" {{ user.profile.image.url }}" class="rounded-circle img-square-35 z-depth-0" alt=""
+                            height="35">
+                    </a>
+                </li>
+                {% endif %}
+                {% if not user.is_authenticated %}
+                <li class="nav-item">
+                    {% if active|stringformat:"s" == 'register'|stringformat:"s" %}
+                    <a class="nav-link link-pink active" href="{% url 'cars-register' %}">إنشاء حساب</a>
+                    {% else %}
+                    <a class="nav-link link-pink" href="{% url 'cars-register' %}">إنشاء حساب</a>
+                    {% endif %}
+
+
+
+                    {% endif %}
+            </ul>
+            <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item">
+                    {% if active|stringformat:"s" == 'about'|stringformat:"s" %}
+                    <a class="nav-link link-pink active" href="{% url 'cars-about' %}">حول الموقع</a>
+                    {% else %}
+                    <a class="nav-link link-pink" href="{% url 'cars-about' %}">حول الموقع</a>
+                    {% endif %}
+                </li>
+
+
+
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    {% if active|stringformat:"s" == 'my_garage'|stringformat:"s" %}
+                    <a class="nav-link link-pink active" href="{% url 'my-garage' %}">كراجي</a>
+                    {% else %}
+                    <a class="nav-link link-pink" href="{% url 'my-garage' %}">كراجي</a>
+                    {% endif %}
+
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    {% if user.is_authenticated %}
+                    {% if active|stringformat:"s" == 'car-price'|stringformat:"s" %}
+                    <a class="nav-link link-pink active" href="{% url 'cars-price' %}">سعر سيارتي</a>
+                    {% else %}
+                    <a class="nav-link link-pink" href="{% url 'cars-price' %}">سعر سيارتي</a>
+                    {% endif %}
+                    {% else %}
+                    <a class="nav-link link-pink" href="{% url 'cars-login' %}">سعر سيارتي</a>
+                    {% endif %}
+
+                </li>
+
+                <li class="nav-item">
+                    {% if user.is_authenticated %}
+                    {% if active|stringformat:"s" == 'sell_my_car'|stringformat:"s" %}
+                    <a class="nav-link link-pink active" href="{% url 'cars-sell' %}">اعرض سيارتي</a>
+                    {% else %}
+                    <a class="nav-link link-pink" href="{% url 'cars-sell' %}">اعرض سيارتي</a>
+                    {% endif %}
+                    {% else %}
+                    <a class="nav-link link-pink" href="{% url 'cars-login' %}">اعرض سيارتي</a>
+                    {% endif %}
+
+                </li>
+
+                <li class="nav-item">
+                    {% if active|stringformat:"s" == 'home'|stringformat:"s" %}
+                    <a class="nav-link link-pink active" href="{% url 'cars-home' %}">الصفحة الرئيسية</a>
+                    {% else %}
+                    <a class="nav-link link-pink" href="{% url 'cars-home' %}">الصفحة الرئيسية</a>
+                    {% endif %}
+
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- end nav bar -->
+
+
+
+
+
+
+
+
+
+
+
+    <div class="container">
+        <!-- root row -->
+
+
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} center" dir="rtl">
+            {{ message}}
+        </div>
+        {% endfor %}
+        {% endif %}
+
+
+
+        {% block content%}
+
+        {% endblock content%}
+
+
+
+    </div>
+
+    {% block footer%}
+
+    {% endblock footer%}
+
+
+
+
+
+
+
+
+    <script src="{% static 'cars/js/jquery-3.3.1.min.js'%}"></script>
+    <script src="{% static 'cars/js/popper.min.js'%}"></script>
+    <script src="{% static 'cars/js/bootstrap.min.js'%}"></script>
+    <script src="{% static 'cars/js/sweetalert2.all.min.js' %}"></script>
+</body>
+
+</html>

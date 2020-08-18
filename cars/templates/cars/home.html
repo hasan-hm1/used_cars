@@ -1,0 +1,571 @@
+{% extends 'cars/base.html'%}
+{% load static %}
+
+{% block content%}
+
+<!-- to prevent resend post on refresh -->
+<script>
+  if (window.history.replaceState) {
+      window.history.replaceState(null, null, window.location.href);
+  }
+</script>
+
+
+
+
+
+<form method="POST" action="." enctype="multipart/form-data" id="search_form">
+  {% csrf_token %}
+
+</form>
+
+
+
+
+<!-- root row -->
+<div class="row">
+
+
+
+  <!-- seach section -->
+  <div class="col">
+    <div class="card pt-3 pb-2 mb-4">
+      <div class="row mb-4">
+        <!-- first row -->
+        <span class="search-text mx-auto">اختر خيار واحد أو أكثر</span>
+      </div> <!-- end first row -->
+      <!-- start row -->
+
+
+      <div class="row mb-2 mx-auto">
+
+
+
+        <select id='brand' name="brand" form='search_form'
+          class="custom-select  btn btn-dark select-style dp-width300 mx-auto" dir="rtl">
+          <option value="" selected>جميع الشركات</option>
+          <option value="كيا">كيا</option>
+          <option value="هيونداي">هيونداي</option>
+          <option value="تويوتا">تويوتا</option>
+          <option value="مازدا">مازدا</option>
+          <option value="نيسان">نيسان</option>
+          <option value="ميتسوبيشي">ميتسوبيشي</option>
+          <option value="هوندا">هوندا</option>
+          <option value="بيجو">بيجو</option>
+          <option value="سايبا">سايبا</option>
+          <option value="مرسيدس">مرسيدس</option>
+          <option value="فولفو">فولفو</option>
+          <option value="فورد">فورد</option>
+          <option value="شيفروليه">شيفروليه</option>
+          <option value="فيات">فيات</option>
+          <option value="أودي">أودي</option>
+          <option value="أوبل">أوبل</option>
+          <option value="بروتون">بروتون</option>
+          <option value="بورش">بورش</option>
+          <option value="BMW">BMW</option>
+          <option value="داسيا">داسيا</option>
+          <option value="دايهاتسو">دايهاتسو</option>
+          <option value="رينو">رينو</option>
+          <option value="سكودا">سكودا</option>
+          <option value="سوبارو">سوبارو</option>
+          <option value="سوزوكي">سوزوكي</option>
+          <option value="سيامكو">سيامكو</option>
+          <option value="سيتروين">سيتروين</option>
+          <option value="فولكس فاجن">فولكس فاجن</option>
+          <option value="لادا">لادا</option>
+          <option value="لاند روفر">لاند روفر</option>
+          <option value="ميني">ميني</option>
+          <option value="همر">همر</option>
+        </select>
+
+
+      </div>
+      <!-- end row -->
+      <div class="row mb-3 mx-auto">
+        <!-- second row -->
+        <select id='model' name="model" form="search_form"
+          class="custom-select  btn btn-dark select-style dp-width300  mx-auto" dir="rtl">
+          <option value="" selected>كل الموديلات</option>
+
+        </select>
+
+
+
+        <script src="{% static 'cars/js/jquery-1.11.1.min.js'%}"></script>
+
+
+
+        <script>
+          $(document).ready(function () {
+            $("#brand").change(function () {
+              var val = $(this).val();
+              if (val == "كيا") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='ريو'>ريو</option><option value='سيراتو'>سيراتو</option><option value='فورتي'>فورتي</option><option value='أوبتيما'>أوبتيما</option><option value='أمانتي'>أمانتي</option><option value='بيكانتو'>بيكانتو</option><option value='سبورتاج'>سبوتاج</option><option value='سبيكترا'>سبيكترا</option><option value='سورينتو'>سورينتو</option><option value='سول'>سول</option><option value='شوما'>شوما</option><option value='كادينزا'>كادينزا</option><option value='كارنفال'>كارنفال</option><option value='كارينز'>كارينز</option><option value='مورنينغ'>مورنينغ</option><option value='موهافي'>موهافي</option><option value='4000'>4000</option><option value='2700'>2700</option>");
+              } else if (val == "هيونداي") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='أفانتي'>أفانتي</option><option value='أكسنت'>أكسنت</option><option value='إلنترا'>إلنترا</option><option value='ازيرا'>ازيرا</option><option value='سوناتا'>سوناتا</option><option value='توسان'>توسان</option><option value='سانتافي'>سانتافي</option><option value='جينيسيس'>جينيسيس</option><option value='فيراكروز'>فيراكروز</option><option value='اتش 1'>اتش 1</option>");
+              } else if (val == "") {
+                $("#model").html("<option value=''>الموديل</option>");
+              } else if (val == "تويوتا") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='كورولا'>كورولا</option><option value='كامري'>كامري</option><option value='يارس'>يارس</option><option value='هيلوكس'>هيلوكس</option><option value='اف جي'>اف جي</option><option value='لاند كروزر'>لاند كروزر</option><option value='راف 4'>راف 4</option>");
+              } else if (val == "مازدا") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='2'>2</option><option value='3'>3</option><option value='626'>626</option><option value='929'>929</option><option value='6'>6</option>");
+              } else if (val == "نيسان") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='مورانو'>مورانو</option><option value='تيدا'>تيدا</option><option value='صني'>صني</option><option value='قاشقاي'>قاشقاي</option>");
+              } else if (val == "ميتسوبيشي") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='لانسر'>لانسر</option><option value='باجيرو'>باجيرو</option><option value='كولت'>كولت</option><option value='ASX'>ASX</option>");
+              } else if (val == "هوندا") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='اكورد'>اكورد</option><option value='سيتي'>سيتي</option><option value='سيفيك'>سيفيك</option>");
+              } else if (val == "بيجو") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='104'>104</option><option value='206'>206</option><option value='304'>304</option><option value='305'>305</option><option value='307'>307</option><option value='308'>308</option>");
+              } else if (val == "سايبا") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='سابا'>سابا</option>");
+              } else if (val == "مرسيدس") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='190'>190</option><option value='200'>200</option><option value='230'>230</option><option value='280'>280</option><option value='300'>300 </option><option value='320'>320</option><option value='500'>500</option><option value='AMG'>AMG</option><option value='E-Class'>E-Class</option><option value='S-Class'>S-Class</option>");
+              } else if (val == "فولفو") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='24'>24</option><option value='240'>240</option><option value='440'>440</option><option value='460'>460</option>");
+              } else if (val == "فورد") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='تيتانيوم'>تيتانيوم</option><option value='مونديو'>مونديو</option><option value='سييرا'>سييرا</option><option value='فوكس'>فوكس</option><option value='اسكورت'>اسكورت</option>");
+              } else if (val == "شيفروليه") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='امبالا'>امبالا</option><option value='افيو'>افيو</option><option value='اوبترا'>اوبترا</option><option value='افلانش'>افلانش</option><option value='كروز'>كروز</option><option value='لومينا'>لومينا</option><option value='ماليبو'>ماليبو</option>");
+              } else if (val == "فيات") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='بونتو'>بونتو</option><option value='فلوريدا'>فلوريدا</option><option value='باليو'>باليو</option><option value='لينيا'>لينيا</option>");
+              } else if (val == "أودي") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='A3'>A3</option><option value='A4'>A4</option><option value='A6'>A6</option><option value='Q5'>Q5</option><option value='Q7'>Q7</option>");
+              } else if (val == "أوبل") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='أسكونا'>أسكونا</option><option value='استرا'>استرا</option><option value='أوميغا'>أوميغا</option><option value='فيكترا'>فيكترا</option><option value='كاديت'>كاديت</option>");
+              } else if (val == "بروتون") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='واجا'>واجا</option><option value='ويرا'>ويرا</option><option value='ساجا'>ساجا</option><option value='ارتيجا'>ارتيجا</option>");
+              } else if (val == "بورش") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='كايين'>كايين</option><option value='كايمان'>كايمان</option><option value='كاريرا'>كاريرا</option>");
+              } else if (val == "BMW") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='M5'>M5</option><option value='X3'>X3</option><option value='X5'>X5</option>");
+              } else if (val == "داسيا") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='لوجان'>لوجان</option><option value='سولينزا'>سولينزا</option>");
+              } else if (val == "دايهاتسو") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='تيريوس'>تيريوس</option><option value='سيريون'>سيريون</option>");
+              } else if (val == "رينو") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='سانديرو'>سانديرو</option><option value='سيمبول'>سيمبول</option><option value='فلوانس'>فلوانس</option><option value='كليو'>كليو</option><option value='ميغان'>ميغان</option>");
+              } else if (val == "سكودا") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='أوكتافيا'>أوكتافيا</option><option value='فابيا'>فابيا</option><option value='رومستر'>رومستر</option>");
+              } else if (val == "سوبارو") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='امبريزا'>امبريزا</option><option value='ليجاسي'>ليجاسي</option>");
+              } else if (val == "سوزوكي") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='سويفت'>سويفت</option><option value='ليانا'>ليانا</option><option value='ماروتي'>ماروتي</option>");
+              } else if (val == "سيامكو") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='شام'>شام</option><option value='بالميرا'>بالميرا</option>");
+              } else if (val == "سيتروين") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='C2'>C2</option><option value='C3'>C3</option><option value='C4'>C4</option><option value='C5'>C5</option><option value='كسانتيا'>كسانتيا</option>");
+              } else if (val == "فولكس فاجن") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='بولو'>بولو</option><option value='باسات'>باسات</option><option value='شيروكو'>شيروكو</option><option value='غولف'>غولف</option><option value='بيتل'>بيتل</option>");
+              } else if (val == "لادا") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='105'>105</option><option value='107'>107</option><option value='109'>109</option><option value='110'>110</option><option value='112'>112</option>");
+              } else if (val == "لاند روفر") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='رانج روفر'>رانج روفر</option><option value='ديفيندر'>ديفيندر</option><option value='LR2'>LR2</option>");
+              } else if (val == "ميني") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='كوبر'>كوبر</option><option value='ديفيندر'>ديفيندر</option><option value='LR2'>LR2</option>");
+              } else if (val == "همر") {
+                $("#model").html("<option value='all'>كل الموديلات</option><option value='H3'>H3</option>");
+              }
+
+            });
+          });
+        </script>
+
+
+
+
+
+      </div> <!-- end second row -->
+
+
+      <div class="row mb-2 mx-auto">
+        <!-- third row -->
+        <select form="search_form" name="to_year" class="col custom-select  btn btn-dark select-style dp-width120 mr-3"
+          dir="rtl">
+          <option value='' selected>إلى سنة</option>
+          <option value="2002">2002</option>
+          <option value="2003">2003</option>
+          <option value="2004">2004</option>
+          <option value="2005">2005</option>
+          <option value="2006">2006</option>
+          <option value="2007">2007</option>
+          <option value="2008">2008</option>
+          <option value="2009">2009</option>
+          <option value="2010">2010</option>
+          <option value="2011">2011</option>
+          <option value="2012">2012</option>
+          <option value="2013">2013</option>
+          <option value="2014">2014</option>
+          <option value="2015">2015</option>
+        </select>
+
+
+        <select form="search_form" name="from_year" class="col custom-select  btn btn-dark select-style dp-width120"
+          dir="rtl">
+          <option value='' selected>من سنة</option>
+          <option value="2002">2002</option>
+          <option value="2003">2003</option>
+          <option value="2004">2004</option>
+          <option value="2005">2005</option>
+          <option value="2006">2006</option>
+          <option value="2007">2007</option>
+          <option value="2008">2008</option>
+          <option value="2009">2009</option>
+          <option value="2010">2010</option>
+          <option value="2011">2011</option>
+          <option value="2012">2012</option>
+          <option value="2013">2013</option>
+          <option value="2014">2014</option>
+          <option value="2015">2015</option>
+        </select>
+
+
+
+      </div> <!-- end third row -->
+
+
+
+
+
+      <div class="row mb-2 mx-auto">
+        <!-- forth row -->
+
+        <select form="search_form" name="to_price" class="col custom-select  btn btn-dark select-style dp-width120 mr-3"
+          dir="rtl">
+          <option value='' selected>إلى السعر</option>
+          <option value="1000000">1 مليون</option>
+          <option value="2000000">2 مليون</option>
+          <option value="3000000">3 مليون</option>
+          <option value="4000000">4 مليون</option>
+          <option value="5000000">5 مليون</option>
+          <option value="10000000">10 مليون</option>
+          <option value="15000000">15 مليون</option>
+          <option value="20000000">20 مليون</option>
+          <option value="25000000">25 مليون</option>
+          <option value="30000000">30 مليون</option>
+          <option value="100000000">+ 30 مليون</option>
+        </select>
+
+
+
+
+        <select form="search_form" name="from_price" class="col custom-select  btn btn-dark select-style dp-width120"
+          dir="rtl">
+          <option value='' selected>من السعر</option>
+          <option value="0">0 مليون</option>
+          <option value="1000000">1 مليون</option>
+          <option value="2000000">2 مليون</option>
+          <option value="3000000">3 مليون</option>
+          <option value="4000000">4 مليون</option>
+          <option value="5000000">5 مليون</option>
+          <option value="10000000">10 مليون</option>
+          <option value="15000000">15 مليون</option>
+          <option value="20000000">20 مليون</option>
+          <option value="25000000">25 مليون</option>
+          <option value="30000000">30 مليون</option>
+        </select>
+
+
+
+
+      </div> <!-- end forth row -->
+
+
+      <div class="row mb-3 mx-auto">
+        <!-- fifth row -->
+
+
+
+        <select form="search_form" name="to_kilometer"
+          class="col custom-select  btn btn-dark select-style dp-width120 mr-3" dir="rtl">
+          <option value='' selected>إلى كيلومتر</option>
+          <option value="5000">5,000</option>
+          <option value="25000">25,000</option>
+          <option value="50000">50,000</option>
+          <option value="75000">75,000</option>
+          <option value="100000">100,000</option>
+          <option value="150000">150,000</option>
+          <option value="200000">200,000</option>
+          <option value="300000">300,000</option>
+          <option value="500000">500,000</option>
+          <option value="1000000">500,000 +</option>
+        </select>
+
+
+
+
+        <select form="search_form" name="from_kilometer"
+          class="col custom-select  btn btn-dark select-style dp-width120" dir="rtl">
+          <option value='' selected>من كيلومتر</option>
+          <option value="0">0</option>
+          <option value="25000">25,000</option>
+          <option value="50000">50,000</option>
+          <option value="75000">75,000</option>
+          <option value="100000">100,000</option>
+          <option value="150000">150,000</option>
+          <option value="200000">200,000</option>
+          <option value="300000">300,000</option>
+          <option value="500000">500,000</option>
+        </select>
+
+
+
+      </div> <!-- end fifth row -->
+
+
+
+
+
+      <div class="row mb-2 mx-auto">
+        <!-- 7 row -->
+
+
+
+        <button form="search_form" type="submit" class="btn btn-outline-primary">بحث</button>
+
+
+      </div> <!-- end 7 row -->
+
+
+    </div>
+    <!-- end card div -->
+
+  </div>
+
+
+
+  <!-- end search section -->
+
+
+
+
+
+  <!-- list of cards -->
+  <div class="col-md-8 mx-auto">
+    <!-- row for cards -->
+
+    <div class="row">
+
+
+
+      {% for car in cars %}
+
+
+      <div class="col mb-4">
+        <div class="card" style="width: 21rem;">
+          <div class="image-under">
+            <img src="{{ car.image0.url }}" class="card-img-top" alt="..." height="200">
+            <div class="ml-auto comment-above-image">
+              <label id='comment-label' class="heart-label">{{car.comment_set.count}}</label>
+              <i class="fas fa-comments heart"></i>
+            </div>
+
+
+
+            {% if user in car.loves.all %}
+
+            <div class="heart-above-image">
+              <label id='l-{{ car.pk }}' class="heart-label"> {{car.loves.count}} </label>
+
+              <i class="fas fa-heart heart" id='i-{{ car.pk }}' title="unlove"></i>
+            </div>
+
+
+
+            {% else %}
+            <div class="heart-above-image">
+              <label id='l-{{ car.pk }}' class="heart-label"> {{car.loves.count}} </label>
+              <i class="far fa-heart heart" id='i-{{ car.pk }}' title="love"></i>
+            </div>
+
+
+
+            {% endif %}
+          </div>
+
+
+          <div class="card-body">
+
+
+
+
+
+            <h4 class="card-title center">{{car.brand}} {{ car.model }}</h4>
+            <span class="center font-mine">{{car.production_year}} : سنة الصنع</span>
+            <span class="center font-mine">{{ car.kilometer}} : الكيلومترات</span>
+            <span class="center price" dir="rtl"> {{ car.price }} ليرة</span><br>
+            <a href="{% url 'car-details' car.id %}" class="btn btn-dark center">التفاصيل</a>
+
+
+
+
+
+
+
+
+          </div>
+
+
+
+        </div>
+      </div>
+
+      {% if user.is_authenticated %}
+      <script>
+        $(document).ready(function () {
+
+
+          $('#i-{{ car.pk }}').click(function () {
+
+
+            var value = $(this).attr("title");
+
+            console.log(value);
+
+            if (value == 'unlove') {
+              data = {
+                operation: 'unlove',
+                id: '{{ car.pk }}',
+                csrfmiddlewaretoken: $('input[name = csrfmiddlewaretoken]').val(),
+              };
+              console.log(data);
+              $.ajax({
+                type: 'POST',
+                dataType: "json",
+                async: true,
+                url: "{% url 'love-unlove-toggle' %}",
+
+
+                data: data,
+
+                success: function (json) {
+
+                  $('#l-{{ car.pk }}').html(json.loves);
+
+
+                  $('#i-{{ car.pk }}').prop('title', 'love');
+                },
+                error: function () {
+
+                }
+
+              });
+
+              $(this).removeClass('fas').addClass('far');
+
+            } else {
+
+              data = {
+                operation: 'love',
+                id: '{{ car.pk }}',
+                csrfmiddlewaretoken: $('input[name = csrfmiddlewaretoken]').val(),
+              };
+              console.log(data);
+
+              $.ajax({
+                type: 'POST',
+                dataType: "json",
+                async: true,
+                url: "{% url 'love-unlove-toggle' %}",
+
+
+                data: data,
+
+                success: function (json) {
+
+                  $('#l-{{ car.pk }}').html(json.loves);
+
+
+                  $('#i-{{ car.pk }}').prop('title', 'unlove');
+                },
+                error: function () {
+
+                }
+
+              });
+
+
+              $(this).removeClass('far').addClass('fas');
+            }
+
+
+          });
+
+
+        })
+
+
+
+      </script>
+      {% else %}
+      <script src="{% static 'cars/js/sweetalert.min.js'%}"></script>
+      <script src="{% static 'cars/js/sweetalert2.all.min.js' %}"></script>
+
+      
+      
+      <script>
+        $(document).ready(function () {
+          $('#i-{{ car.pk }}').click(function () {
+            // swal('', 'من فضلك قم بتسجيل الدخول', "info");
+
+            Swal.fire({
+              type: 'warning',
+              // title: 'Oops...',
+              text: 'من فضلك قم بتسجيل الدخول',
+              footer: '<small><a class=\'anchor-link mr-2\' href=\'{% url "cars-login" %}\'>تسجيل الدخول</a></small>'
+            })
+
+
+          });
+        })
+
+      </script>
+
+      {% endif %}
+
+      {% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    <!-- end row of cards -->
+  </div>
+  <!-- end of cards -->
+
+
+
+
+</div>
+
+<!-- end root row -->
+
+{% endblock content%}
+
+
+
+{% block footer%}
+
+<div class="footer pt-4 pb-4 mt-4">
+  <span class="footer-text center">All rights reserved</span>
+</div>
+
+
+{% endblock footer%}

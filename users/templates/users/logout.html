@@ -1,0 +1,35 @@
+{% extends 'cars/base.html'%}
+
+
+
+{% block content%}
+
+
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>
+
+
+
+<div class="col-md-8 mx-auto ">
+    <h4 class="border-bottom b center text-dark border-pink text-right pb-4">تم تسجيل الخروج بنجاح</h4>
+</div>
+<div class="center">
+<a href="{% url 'cars-login' %}" class="btn btn-dark mt-4">تسجيل الدخول</a>
+</div>
+
+
+
+{% endblock content%}
+
+
+{% block footer%}
+<div class=" fixed-bottom">
+    <div class="footer pt-4 pb-4 mt-4">
+        <span class="footer-text center">All rights reserved</span>
+    </div>
+</div>
+
+{% endblock footer%}

@@ -1,0 +1,84 @@
+{% extends 'cars/base.html'%}
+{% load static %}
+
+
+{% block content%}
+
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>
+
+
+<div class="pt-4 mt-4 mx-auto col-md-6 col-sm-8">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="col-md mx-auto ">
+            <h4 class="border-bottom  center text-dark border-pink text-right pb-4 mb-4">أدخل معلومات الحساب</h4>
+        </div>
+
+        <div class="form-group center mb-4">
+            <input name="mobile" dir="rtl" type="tel" pattern="^09[0-9]{8}$" style="width:90%" class="form-control"
+                id="mobile" placeholder=" رقم الموبايل"
+                oninvalid="this.setCustomValidity('عذراً، الرقم المدخل غير صالح')" oninput="setCustomValidity('')"
+                required>
+        </div>
+
+
+        <div class="form-group center mb-4">
+            <input name="password" dir="rtl" type="password" style="width:90%" class="form-control" id="password"
+                placeholder=" كلمة المرور" required>
+        </div>
+
+
+        <div class=" center">
+            <button type="submit" class="btn btn-outline-primary">دخول</button>
+        </div>
+
+    </form>
+
+    <div class="center mt-4">
+        <small class="pb-4"><a class="anchor-link mr-2" href="{% url 'password-reset' %}">
+                نسيت كلمة المرور ؟</a></small>
+    </div>
+    <div class="center mt-4 pt-4 mb-4 pb-4">
+        <small class="pb-4">ليس لديك حساب ؟<a class="anchor-link mr-2" href="{% url 'cars-register' %}">إنشاء
+                حساب</a></small>
+    </div>
+
+</div>
+
+<script src="{% static 'cars/js/jquery-1.11.1.min.js'%}"></script>
+
+<script>
+
+    var mobile = '{{ mobile }}'
+
+    function post() {
+
+
+        $('#mobile').val(mobile);
+
+        // console.log(mobile);
+    };
+    if ('{{ mobile }}') {
+
+        post();
+    }
+
+
+</script>
+
+
+{% endblock content%}
+
+
+{% block footer%}
+
+<div class="footer pt-4 pb-4 mt-4">
+    <span class="footer-text center">All rights reserved</span>
+</div>
+
+
+{% endblock footer%}

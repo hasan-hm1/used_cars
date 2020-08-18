@@ -1,0 +1,111 @@
+{% extends 'cars/base.html'%}
+{% load static %}
+
+
+
+
+
+{% block content%}
+
+
+
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>
+
+
+
+<div class="pt-4 mt-4 mx-auto col-md-6 col-sm-8">
+    <form method="POST"
+        oninput='password_confirm.setCustomValidity(password_confirm.value != password.value ? "عذراً، كلمة السر غير متطابقة" : "")'>
+        {% csrf_token %}
+
+        <div class="col-md mx-auto ">
+            <h4 class="border-bottom  center text-dark border-pink text-right pb-4 mb-4">أدخل معلومات الحساب</h4>
+        </div>
+        <div class="form-group center mb-4 col-md">
+            <input name="last_name" dir="rtl" type="text" style="width:43%" class="form-control mx-auto" id="last_name"
+                placeholder="الاسم الأخير" onkeypress="return /\p{L}/u.test(event.key)" required>
+            <input name="first_name" dir="rtl" type="text" style="width:42%" class="form-control mx-auto"
+                id="first_name" placeholder="الاسم الأول" onkeypress="return /\p{L}/u.test(event.key)" required>
+        </div>
+
+
+        <div class="form-group center mb-4">
+            <input name="email" dir="rtl" type="email" style="width:90%" class="form-control" id="email"
+                aria-describedby="emailHelp" placeholder="البريد الالكتروني"
+                oninvalid="this.setCustomValidity('عذراً، البريد الالكتروني غير صالح')" oninput="setCustomValidity('')"
+                required>
+        </div>
+        <div class="form-group center mb-4">
+            <input name="password" pattern=".{8,}"
+                oninvalid="this.setCustomValidity('عذراً، كلمة السر يجب أن تكون 8 محارف على الأقل')"
+                oninput="setCustomValidity('')" dir="rtl" type="password" style="width:90%" class="form-control"
+                id="password" placeholder="كلمة المرور" required>
+        </div>
+        <div class="form-group center mb-4">
+            <input name="password_confirm" dir="rtl" type="password" style="width:90%" class="form-control"
+                id="password_confirm" placeholder="تأكيد كلمة المرور" required>
+        </div>
+        <div class="form-group center mb-4">
+            <input name="mobile" dir="rtl" type="tel" pattern="^09[0-9]{8}$" style="width:90%" class="form-control"
+                id="mobile" placeholder="رقم الموبايل 09xxxxxxxx"
+                oninvalid="this.setCustomValidity('عذراً، الرقم المدخل غير صالح')" oninput="setCustomValidity('')"
+                required>
+        </div>
+        <div class=" center">
+            <button type="submit" class="btn btn-outline-primary">إنشاء حساب</button>
+        </div>
+
+    </form>
+    <div class="center mt-4 pt-4">
+        <small>لديك حساب ؟<a class="anchor-link mr-2" href="{% url 'cars-login' %}">تسجيل الدخول</a></small>
+    </div>
+
+
+</div>
+
+
+
+<script src="{% static 'cars/js/jquery-1.11.1.min.js'%}"></script>
+
+<script>
+    var first_name = '{{ first_name }}';
+    var last_name = '{{ last_name }}'
+    var email = '{{ email }}'
+    var mobile = '{{ mobile }}'
+
+    function post() {
+
+        $('#first_name').val(first_name);
+        $('#last_name').val(last_name);
+        $('#email').val(email);
+        $('#mobile').val(mobile);
+        // console.log(first_name);
+        // console.log(last_name);
+        // console.log(email);
+        // console.log(mobile);
+    };
+    if ('{{ first_name }}') {
+
+        post();
+    }
+
+
+</script>
+
+
+
+{% endblock content%}
+
+
+
+
+{% block footer%}
+<div class="footer pt-4 pb-4 mt-4">
+    <span class="footer-text center">All rights reserved</span>
+</div>
+
+{% endblock footer%}

@@ -1,0 +1,127 @@
+{% extends 'cars/base.html'%}
+
+
+
+
+{% block content%}
+
+<!-- to prevent resend post on refresh -->
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>
+
+
+<div class="mx-auto col-md-10">
+    <div class="row col-md-8 mx-auto">
+        <img src=" {{ user.profile.image.url }}" class="rounded-circle img-square  z-depth-0 mx-auto mb-4" alt=""
+            height="150">
+    </div>
+    <div class="row col-md-8 mx-auto mb-4">
+        <h3 class="mx-auto">{{ user.first_name}} {{ user.last_name }}</h3>
+    </div>
+
+    <form action="." method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row col-md-8 mx-auto mb-2 pt-4">
+            <div class="col-md">
+                <div class="input-group mb-2 mr-sm-2">
+                    <input type="text" name='last_name' class="form-control" dir="rtl"
+                        id="inlineFormInputGroupUsername2" value="{{ user.last_name }}"
+                        onkeypress="return /\p{L}/u.test(event.key)">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">الاسم الأخير</div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md">
+                <div class="input-group mb-2 mr-sm-2">
+                    <input type="text" name='first_name' class="form-control" dir="rtl"
+                        id="inlineFormInputGroupUsername2" value="{{ user.first_name }}"
+                        onkeypress="return /\p{L}/u.test(event.key)">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">الاسم الأول</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row col-md-8 mx-auto mb-2">
+            <div class="col">
+                <div class="input-group mb-2 mr-sm-2">
+                    {% if user.email %}
+                    <input type="email" name='email' class="form-control" dir="rtl" id="inlineFormInputGroupUsername2"
+                        value="{{ user.email }}" aria-describedby="emailHelp"
+                        oninvalid="this.setCustomValidity('عذراً، البريد الالكتروني غير صالح')"
+                        oninput="setCustomValidity('')">
+
+                    {% else %}
+                    <input type="email" name='email' class="form-control" dir="rtl" id="inlineFormInputGroupUsername2"
+                        placeholder="لم تقم بإدخال بريدك الالكتروني" aria-describedby="emailHelp"
+                        oninvalid="this.setCustomValidity('عذراً، البريد الالكتروني غير صالح')"
+                        oninput="setCustomValidity('')">
+                    {% endif %}
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">البريد الالكتروني</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row col-md-8 mx-auto mb-2">
+            <div class="col">
+                <div class="input-group mb-2 mr-sm-2">
+                    <input type="text" name='mobile' class="form-control" dir="rtl" id="inlineFormInputGroupUsername2"
+                        value="{{ user.username }}" pattern="^09[0-9]{8}$"
+                        oninvalid="this.setCustomValidity('عذراً، الرقم المدخل غير صالح')"
+                        oninput="setCustomValidity('')">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">رقم الموبايل</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="center mt-4">
+            <small class="pb-4"><a class="anchor-link mr-2" href="{% url 'password-reset' %}">
+                    تغيير كلمة المرور </a></small>
+        </div>
+
+        <div class="row col-md-8 mx-auto mb-4 pb-2">
+            <label class="btn btn-dark btn-file mx-auto">
+                تغيير صورتي<input name='image' style="display: none;" type="file">
+            </label>
+        </div>
+
+
+
+
+        <div class="row col-md-8 mx-auto pb-4 pt-4">
+
+            <button type="submit" value='submit' class="btn btn-outline-primary mx-auto mb-4">حفظ التعديلات</button>
+
+        </div>
+    </form>
+</div>
+
+
+{% endblock content%}
+
+
+
+
+
+
+
+
+{% block footer%}
+
+<div class="footer pt-4 pb-4 mt-4">
+    <span class="footer-text center">All rights reserved</span>
+</div>
+
+
+{% endblock footer%}

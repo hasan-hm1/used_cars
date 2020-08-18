@@ -1,0 +1,505 @@
+{% extends 'cars/base.html'%}
+{% load static %}
+
+
+{% block content%}
+
+
+<!-- to prevent resend post on refresh -->
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>
+
+
+
+<!-- slider row -->
+<div class="row">
+
+    <div class="col-md-8 mx-auto">
+
+        <div class="card-pink mb-4">
+
+
+
+
+
+
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+
+                    {% for image in images %}
+                    <li data-target="#carouselExampleIndicators" data-slide-to="{{ forloop.counter }}"></li>
+
+                    {% endfor %}
+
+
+                </ol>
+                <div class="carousel-inner">
+
+
+
+                    <div class="carousel-item active">
+                        <img src="{{ car.image0.url }}" class="d-block w-100" alt="...">
+
+
+
+                    </div>
+
+                    {% for image in images %}
+                    <div class="carousel-item">
+                        <img src="{{ image.url }}" class="d-block w-100" alt="...">
+                    </div>
+                    {% endfor %}
+
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+
+</div>
+<!-- end slider  row -->
+
+
+
+
+<!-- script for love button -->
+<script src="{% static 'cars/js/jquery-1.11.1.min.js'%}"></script>
+{% if user.is_authenticated %}
+<script>
+    $(document).ready(function () {
+
+
+        $('#i-{{ car.pk }}').click(function () {
+
+
+            var value = $(this).attr("title");
+
+            console.log(value);
+
+            if (value == 'unlove') {
+                data = {
+                    operation: 'unlove',
+                    id: '{{ car.pk }}',
+                    csrfmiddlewaretoken: $('input[name = csrfmiddlewaretoken]').val(),
+                };
+                console.log(data);
+                $.ajax({
+                    type: 'POST',
+                    dataType: "json",
+                    async: true,
+                    url: "{% url 'love-unlove-toggle' %}",
+
+
+                    data: data,
+
+                    success: function (json) {
+
+                        $('#l-{{ car.pk }}').html(json.loves);
+
+
+                        $('#i-{{ car.pk }}').prop('title', 'love');
+                    },
+                    error: function () {
+
+                    }
+
+                });
+
+                $(this).removeClass('fas').addClass('far');
+
+            } else {
+
+                data = {
+                    operation: 'love',
+                    id: '{{ car.pk }}',
+                    csrfmiddlewaretoken: $('input[name = csrfmiddlewaretoken]').val(),
+                };
+                console.log(data);
+
+                $.ajax({
+                    type: 'POST',
+                    dataType: "json",
+                    async: true,
+                    url: "{% url 'love-unlove-toggle' %}",
+
+
+                    data: data,
+
+                    success: function (json) {
+
+                        $('#l-{{ car.pk }}').html(json.loves);
+
+
+                        $('#i-{{ car.pk }}').prop('title', 'unlove');
+                    },
+                    error: function () {
+
+                    }
+
+                });
+
+
+                $(this).removeClass('far').addClass('fas');
+            }
+
+
+        });
+
+
+    })
+
+
+
+</script>
+{% else %}
+<script src="{% static 'cars/js/sweetalert.min.js'%}"></script>
+<script>
+    $(document).ready(function () {
+        $('#i-{{ car.pk }}').click(function () {
+            swal('', 'من فضلك قم بتسجيل الدخول', "info");
+
+        });
+    })
+
+</script>
+
+{% endif %}
+<!-- script for love button -->
+
+
+
+
+
+<!-- info row -->
+<div class="row">
+
+
+
+
+    <div class="col-md-8 mb-4 pb-4 mx-auto">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li>
+                <!-- related to love button -->
+                {% if user in car.loves.all %}
+
+                <div class="float-left">
+                    <label id='l-{{ car.pk }}' class="heart-label"> {{car.loves.count}} </label>
+
+                    <i class="fas fa-heart heart" id='i-{{ car.pk }}' title="unlove"></i>
+                </div>
+
+
+
+                {% else %}
+                <div class="float-left">
+                    <label id='l-{{ car.pk }}' class="heart-label"> {{car.loves.count}} </label>
+                    <i class="far fa-heart heart" id='i-{{ car.pk }}' title="love"></i>
+                </div>
+
+
+
+                {% endif %}
+                <!-- related to love button -->
+            </li>
+            <li class="nav-item ml-auto">
+                <a class="nav-link mr-2 btn btn-dark" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                    aria-controls="home" aria-selected="true">معلومات البائع</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link mr-2 btn btn-dark" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                    aria-controls="profile" aria-selected="false">ميزات إضافية</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active btn btn-dark" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                    aria-controls="contact" aria-selected="false">نظرة عامة</a>
+            </li>
+
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="row">
+                    <div class="col-md-8 ml-auto">
+
+
+                        <div class="card-white-border mb-4 mt-4" style="max-width: 18rem;">
+
+                            <div class="card-body text-dark">
+
+                                <div dir='rtl' class="float-right info-list"> اسم البائع : <span
+                                        class="list-text">{{ car.owner.first_name}} {{ car.owner.last_name }}</span>
+                                </div><br>
+                                <div dir='rtl' class="float-right info-list"> رقم الهاتف : <span
+                                        class="list-text">{{ car.owner.username }}</span></div><br>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="row">
+
+                    <div class="col-md-8 mx-auto mt-4 mb-4">
+                        <!-- <div class="card-transparent  mb-3" style="max-width: 18rem;">
+
+                                    <div class="card-body"> -->
+
+                        <div class="row">
+                            {% for ef in extra_features %}
+                            <h5 class="col-md"><span class="badge badge-span info-span p-1">{{ ef }}
+                                </span></h5>
+                            {% endfor %}
+                        </div>
+
+
+                        <!-- </div>
+                                </div> -->
+
+                    </div>
+
+
+
+
+
+                </div>
+
+
+            </div>
+            <div class="tab-pane fade show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+
+                <div class="row">
+                    <div class="col-md">
+
+
+                        <div class=" card-transparent mb-4 mt-4" style="max-width: 18rem;">
+
+                            <div class="card-body text-dark">
+
+                                <div class="float-right info-list" dir='rtl'>نوع الوقود : <span
+                                        class="list-text">{{ fuel }}</span></div><br>
+
+                                <div class="float-right info-list" dir='rtl'> شكل الهيكل : <span
+                                        class="list-text">{{ car.body_shape }}</span></div>
+                                <br>
+                                <div class="float-right info-list" dir='rtl'> عدد المقاعد : <span
+                                        class="list-text">{{ car.seats }}</span></div><br>
+                                <div class="float-right info-list" dir='rtl'> اللون الخارجي : <span
+                                        class="list-text">{{ car.outer_color }}</span></div><br>
+                                <div class="float-right info-list" dir='rtl'> الللون الداخلي : <span
+                                        class="list-text">{{ car.inner_color }}</span></div><br>
+                                <div class="float-right info-list" dir='rtl'> مكان السيارة : <span
+                                        class="list-text">{{ car.place }}</span></div><br>
+                                <div class="float-right info-list" dir='rtl'> تاريخ العرض : <span
+                                        class="list-text">{{ car.date|date:"o-m-d" }}</span></div><br>
+
+
+
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md ">
+
+
+                        <div class="card-transparent mb-4 mt-4" style="max-width: 18rem;">
+
+                            <div class="card-body text-dark">
+
+                                <div dir='rtl' class="float-right info-list"> السعر : <span
+                                        class="list-text">{{ car.price }}
+                                        ليرة</span></div><br>
+
+                                <div dir='rtl' class="float-right info-list"> سنة الصنع : <span
+                                        class="list-text">{{ car.production_year }}</span></div><br>
+
+                                <div dir='rtl' class="float-right info-list"> الحالة الفنية : <span
+                                        class="list-text">{{ car.technical_status }}</span></div><br>
+
+                                <div dir='rtl' class="float-right info-list"> الكيلومترات : <span
+                                        class="list-text">{{ car.kilometer }}</span></div><br>
+
+                                <div dir='rtl' class="float-right info-list"> ناقل الحركة : <span
+                                        class="list-text">{{ transmission }}</span></div><br>
+
+                                <div dir='rtl' class="float-right info-list"> السلندرات : <span
+                                        class="list-text">{{ car.cylinders }}</span></div><br>
+
+                                <div dir='rtl' class="float-right info-list"> سعة المحرك : <span
+                                        class="list-text">{{ car.engine_capacity }}</span></div><br>
+
+
+
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- end info row -->
+
+
+
+
+<!-- start comments section -->
+
+
+<div class="col-md-8 mx-auto">
+    <h4 class="border-bottom border-top  center text-dark border-pink text-right pb-2 pt-2 mb-4">التعليقات</h4>
+</div>
+
+{% if user.is_authenticated %}
+<form action="{% url 'car-details' car.id %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="col-md-8 mx-auto mb-4 pb-4">
+        <div class="input-group mt-4 pt-4 ">
+            <input name='comment' type="text" dir='rtl' class="form-control" placeholder="اكتب تعليق"
+                aria-label="comment1" aria-describedby="basic-addon2"
+                oninvalid="this.setCustomValidity('من فضلك اكتب تعليق أولا')" oninput="setCustomValidity('')" required>
+            <div class="input-group-append">
+                <button class="btn btn-dark" name='add' type="submit">تعليق</button>
+            </div>
+        </div>
+    </div>
+</form>
+{% else %}
+<div class="col-md-8 center mx-auto">
+
+    <small class="pb-4">قم بتسجيل الدخول حتى يمكنك كتابة تعليق<a class="anchor-link mr-2" href="{% url 'cars-login' %}">
+            تسجيل الدخول</a></small>
+</div>
+{% endif %}
+<!-- comments -->
+
+{% if comments %}
+
+{% for comment in comments %}
+
+<form action="{% url 'car-details' car.id %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row col-md-8 mx-auto">
+
+        <article class="media content-section col-md-11">
+            <div class="media-body">
+                <div class="article-metadata">
+                    {% if comment.author == user  %}
+                    <small class="mr-2 float-left mr-md-4 pr-md-4"><button name='delete' value='{{ comment.id }}'
+                            type='submit' class="flat-button">حذف</button></small>
+                    {% endif %}
+                    <small class="mr-2">{{ comment.date_posted }}</small>
+                    <span class="search-text float-right">{{ comment.author.first_name}}
+                        {{ comment.author.last_name }}</span>
+                </div>
+                <h6 class="article-content float-right mt-1" dir="rtl">{{ comment.content }}</h6>
+
+            </div>
+        </article>
+
+        <div class="col-md-1">
+            <img src=" {{ comment.author.profile.image.url }}" class="rounded-circle img-square-80 center z-depth-0"
+                alt=""><br>
+        </div>
+    </div>
+</form>
+{% endfor %}
+
+{% else %}
+
+<div class="col-md-8 pb-4 mx-auto">
+    <h4 class="center text-dark border-pink text-right pb-4 mb-4">لا توجد تعليقات</h4>
+</div>
+
+
+{% endif %}
+
+<!-- end comments -->
+
+
+
+<!-- rounded-circle -->
+
+
+
+
+
+
+
+
+
+
+
+{% endblock content%}
+
+
+
+
+{% block footer%}
+
+<div class="footer pt-4 pb-4 mt-4">
+    <span class="footer-text center">All rights reserved</span>
+</div>
+
+
+{% endblock footer%}
+
+
+
+
+
+
+
+
+<!-- 
+related to commnets 
+
+<article class="media content-section">
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="#">{{ post.author }}</a>
+        <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+      </div>
+      <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
+      <p class="article-content">{{ post.content }}</p>
+    </div>
+  </article>
+
+  cvcccccccccccccccc -->
+
+
+<!-- 
+  divider 
+
+  <div class="article-metadata"></div> -->
+
+
+<!-- <div class="media-body"><small class="text-muted">aaaaaaaaaaaaaaaaaaaaaaaaa</small> -->

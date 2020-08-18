@@ -1,0 +1,647 @@
+{% extends 'cars/base.html'%}
+{% load static %}
+
+
+{% block content%}
+
+
+
+<!-- to prevent resend post on refresh -->
+<script>
+  if (window.history.replaceState) {
+    window.history.replaceState(null, null, window.location.href);
+  }
+</script>
+
+
+
+<form method="POST" action="." enctype="multipart/form-data">
+  {% csrf_token %}
+
+  <!-- fisrt row -->
+  <div class="row">
+
+    <!-- start col  -->
+
+    <div class="col-md">
+
+      <div class="card pt-2 pb-4 mb-4">
+
+        <span class="search-text mx-auto mb-2">المواصفات الشكلية</span>
+
+        <select class="custom-select  btn btn-dark select-style dp-width300 mb-2 mx-auto" dir="rtl" name='body_shape'
+          oninvalid="this.setCustomValidity('من فضلك اختر شكل الهيكل')" oninput="setCustomValidity('')" required>
+          <option value='' selected>شكل الهيكل</option>
+          <option value="سيدان">سيدان</option>
+          <option value="كروس أوفر">كروس أوفر</option>
+          <option value="هاتشباك">هاتشباك</option>
+          <option value="أس يو في">أس يو في</option>
+          <option value="فان">فان</option>
+          <option value="بيك أب">بيك أب</option>
+          <option value="كوبي">كوبي</option>
+          <option value="تاكسي">تاكسي</option>
+        </select>
+
+
+
+
+
+
+
+        <select class="custom-select  btn btn-dark select-style dp-width300 mb-2 mx-auto" dir="rtl" name='seats'
+          oninvalid="this.setCustomValidity('من فضلك اختر عدد المقاعد')" oninput="setCustomValidity('')" required>
+          <option value='' selected>عدد المقاعد</option>
+          <option value="2">2</option>
+          <option value="4">4</option>
+          <option value="4 +">4 +</option>
+        </select>
+
+        <select class="custom-select  btn btn-dark select-style dp-width300 mb-2 mx-auto" dir="rtl"
+          name='technical_status' oninvalid="this.setCustomValidity('من فضلك اختر الحالة الفنية')"
+          oninput="setCustomValidity('')" required>
+          <option value='' selected>الحالة الفنية</option>
+          <option value="ممتازة">ممتازة</option>
+          <option value="جيدة">جيدة</option>
+          <option value="سيئة">سيئة</option>
+        </select>
+
+
+        <div class="row mx-auto">
+
+
+          <select class="col mr-3 custom-select  btn btn-dark select-style dp-width140 mb-2" dir="rtl"
+            name='outer_color' oninvalid="this.setCustomValidity('من فضلك اختر اللون الخارجي')"
+            oninput="setCustomValidity('')" required>
+            <option value='' selected>اللون الخارجي</option>
+            <option value="أسود">أسود</option>
+            <option value="أبيض">أبيض</option>
+            <option value="أصفر">أصفر</option>
+            <option value="وردي">وردي</option>
+            <option value="بيج">بيج</option>
+            <option value="أخضر">أخضر</option>
+            <option value="برتقالي">برتقالي</option>
+            <option value="أزرق/كحلي">أزرق/كحلي</option>
+            <option value="خمري/عنابي">خمري/عنابي</option>
+            <option value="أحمر">أحمر</option>
+            <option value="بني">بني</option>
+            <option value="ذهبي">ذهبي</option>
+            <option value="رصاصي/فضي">رصاصي/فضي</option>
+            <option value="بنفسجي">بنفسجي</option>
+            <option value="زعفراني">زعفراني</option>
+          </select>
+
+
+
+
+
+          <select class="col custom-select  btn btn-dark select-style dp-width140 mb-2 mx-auto" dir="rtl"
+            name='inner_color' oninvalid="this.setCustomValidity('من فضلك اختر اللون الداخلي')"
+            oninput="setCustomValidity('')" required>
+            <option value='' selected>اللون الداخلي</option>
+            <option value="أسود">أسود</option>
+            <option value="أبيض">أبيض</option>
+            <option value="أصفر">أصفر</option>
+            <option value="وردي">وردي</option>
+            <option value="بيج">بيج</option>
+            <option value="أخضر">أخضر</option>
+            <option value="برتقالي">برتقالي</option>
+            <option value="أزرق/كحلي">أزرق/كحلي</option>
+            <option value="خمري/عنابي">خمري/عنابي</option>
+            <option value="أحمر">أحمر</option>
+            <option value="بني">بني</option>
+            <option value="ذهبي">ذهبي</option>
+            <option value="رصاصي/فضي">رصاصي/فضي</option>
+            <option value="بنفسجي">بنفسجي</option>
+            <option value="زعفراني">زعفراني</option>
+          </select>
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+    </div>
+
+    <!-- end col -->
+
+
+
+
+
+
+
+
+
+    <!-- start col  -->
+
+    <div class="col-md">
+      <div class="card pt-2 pb-4 mb-4">
+
+        <span class="search-text mx-auto mb-2">المواصفات الميكانيكية</span>
+
+        <select class="custom-select  btn btn-dark select-style dp-width300 mb-2 mx-auto" dir="rtl"
+          name='engine_capacity' oninvalid="this.setCustomValidity('من فضلك اختر سعة المحرك')"
+          oninput="setCustomValidity('')" required>
+          <option value='' selected>سعة المحرك</option>
+          <option value="1000cc-2000cc">1000cc-2000cc</option>
+          <option value="2000cc-3000cc">2000cc-3000cc</option>
+          <option value="3000cc-4000cc">3000cc-4000cc</option>
+          <option value="4000cc-5000cc">4000cc-5000cc</option>
+          <option value="5000cc-6000cc">5000cc-6000cc</option>
+          <option value="6000cc-7000cc">6000cc-7000cc</option>
+          <option value="7000cc-8000cc">7000cc-8000cc</option>
+          <option value="8000cc +"> 8000cc +</option>
+        </select>
+
+
+
+        <select class="custom-select  btn btn-dark select-style dp-width300 mb-2 mx-auto" dir="rtl" name='cylinders'
+          oninvalid="this.setCustomValidity('من فضلك اختر السلندرات')" oninput="setCustomValidity('')" required>
+          <option value='' selected>السلندرات</option>
+          <option value="v2">v2</option>
+          <option value="v3">v3</option>
+          <option value="v4">v4</option>
+          <option value="v6">v6</option>
+          <option value="v8">v8</option>
+          <option value="v10">v10</option>
+          <option value="v12">v12</option>
+        </select>
+
+
+        <select class="custom-select  btn btn-dark select-style dp-width300 mb-2 mx-auto" dir="rtl"
+          name='transmission_type' oninvalid="this.setCustomValidity('من فضلك اختر نوع ناقل الحركة')"
+          oninput="setCustomValidity('')" required>
+          <option value='' selected>نوع ناقل الحركة</option>
+          <option value="0">عادي</option>
+          <option value="1">أوتوماتيك</option>
+        </select>
+
+
+
+
+        <select class="custom-select  btn btn-dark select-style dp-width300 mb-2 mx-auto" dir="rtl" name='fuel'
+          oninvalid="this.setCustomValidity('من فضلك اختر نوع الوقود')" oninput="setCustomValidity('')" required>
+          <option value='' selected>نوع الوقود</option>
+          <option value="0">بنزين</option>
+          <option value="1">ديزل</option>
+        </select>
+
+
+
+
+      </div>
+
+    </div>
+    <!-- end col -->
+
+
+
+
+    <!-- col 1 -->
+
+    <div class="col-md">
+      <div class="card pt-2 pb-4 mb-4">
+
+        <span class="search-text mx-auto mb-2">المعلومات الأساسية</span>
+
+        <select id='brand' class="custom-select  btn btn-dark select-style dp-width300 mb-2 mx-auto" dir="rtl"
+          name='brand' oninvalid="this.setCustomValidity('من فضلك اختر الشركة المصنعة')" oninput="setCustomValidity('')"
+          required>
+          <option value='' selected>الشركة المصنعة</option>
+          <option value="كيا">كيا</option>
+          <option value="هيونداي">هيونداي</option>
+          <option value="تويوتا">تويوتا</option>
+          <option value="مازدا">مازدا</option>
+          <option value="نيسان">نيسان</option>
+          <option value="ميتسوبيشي">ميتسوبيشي</option>
+          <option value="هوندا">هوندا</option>
+          <option value="بيجو">بيجو</option>
+          <option value="سايبا">سايبا</option>
+          <option value="مرسيدس">مرسيدس</option>
+          <option value="فولفو">فولفو</option>
+          <option value="فورد">فورد</option>
+          <option value="شيفروليه">شيفروليه</option>
+          <option value="فيات">فيات</option>
+          <option value="أودي">أودي</option>
+          <option value="أوبل">أوبل</option>
+          <option value="بروتون">بروتون</option>
+          <option value="بورش">بورش</option>
+          <option value="BMW">BMW</option>
+          <option value="داسيا">داسيا</option>
+          <option value="دايهاتسو">دايهاتسو</option>
+          <option value="رينو">رينو</option>
+          <option value="سكودا">سكودا</option>
+          <option value="سوبارو">سوبارو</option>
+          <option value="سوزوكي">سوزوكي</option>
+          <option value="سيامكو">سيامكو</option>
+          <option value="سيتروين">سيتروين</option>
+          <option value="فولكس فاجن">فولكس فاجن</option>
+          <option value="لادا">لادا</option>
+          <option value="لاند روفر">لاند روفر</option>
+          <option value="ميني">ميني</option>
+          <option value="همر">همر</option>
+        </select>
+
+
+
+        <select name='model' id='model' class="custom-select  btn btn-dark select-style dp-width300 mb-2 mx-auto"
+          dir="rtl" oninvalid="this.setCustomValidity('من فضلك اختر الموديل')" oninput="setCustomValidity('')" required>
+          <option value='' selected>الموديل</option>
+        </select>
+
+        <script src="{% static 'cars/js/jquery-1.11.1.min.js'%}"></script>
+
+
+
+        <script>
+          $(document).ready(function () {
+            $("#brand").change(function () {
+              var val = $(this).val();
+              if (val == "كيا") {
+                $("#model").html("<option value='ريو'>ريو</option><option value='سيراتو'>سيراتو</option><option value='فورتي'>فورتي</option><option value='أوبتيما'>أوبتيما</option><option value='أمانتي'>أمانتي</option><option value='بيكانتو'>بيكانتو</option><option value='سبورتاج'>سبورتاج</option><option value='سبيكترا'>سبيكترا</option><option value='سورينتو'>سورينتو</option><option value='سول'>سول</option><option value='شوما'>شوما</option><option value='كادينزا'>كادينزا</option><option value='كارنفال'>كارنفال</option><option value='كارينز'>كارينز</option><option value='مورنينغ'>مورنينغ</option><option value='موهافي'>موهافي</option><option value='4000'>4000</option><option value='2700'>2700</option>");
+              } else if (val == "هيونداي") {
+                $("#model").html("<option value='أفانتي'>أفانتي</option><option value='أكسنت'>أكسنت</option><option value='إلنترا'>إلنترا</option><option value='ازيرا'>ازيرا</option><option value='سوناتا'>سوناتا</option><option value='توسان'>توسان</option><option value='سانتافي'>سانتافي</option><option value='جينيسيس'>جينيسيس</option><option value='فيراكروز'>فيراكروز</option><option value='اتش 1'>اتش 1</option>");
+              } else if (val == "") {
+                $("#model").html("<option value=''>الموديل</option>");
+              } else if (val == "تويوتا") {
+                $("#model").html("<option value='كورولا'>كورولا</option><option value='كامري'>كامري</option><option value='يارس'>يارس</option><option value='هيلوكس'>هيلوكس</option><option value='اف جي'>اف جي</option><option value='لاند كروزر'>لاند كروزر</option><option value='راف 4'>راف 4</option>");
+              } else if (val == "مازدا") {
+                $("#model").html("<option value='2'>2</option><option value='3'>3</option><option value='626'>626</option><option value='929'>929</option><option value='6'>6</option>");
+              } else if (val == "نيسان") {
+                $("#model").html("<option value='مورانو'>مورانو</option><option value='تيدا'>تيدا</option><option value='صني'>صني</option><option value='قاشقاي'>قاشقاي</option>");
+              } else if (val == "ميتسوبيشي") {
+                $("#model").html("<option value='لانسر'>لانسر</option><option value='باجيرو'>باجيرو</option><option value='كولت'>كولت</option><option value='ASX'>ASX</option>");
+              } else if (val == "هوندا") {
+                $("#model").html("<option value='اكورد'>اكورد</option><option value='سيتي'>سيتي</option><option value='سيفيك'>سيفيك</option>");
+              } else if (val == "بيجو") {
+                $("#model").html("<option value='104'>104</option><option value='206'>206</option><option value='304'>304</option><option value='305'>305</option><option value='307'>307</option><option value='308'>308</option>");
+              } else if (val == "سايبا") {
+                $("#model").html("<option value='سابا'>سابا</option>");
+              } else if (val == "مرسيدس") {
+                $("#model").html("<option value='190'>190</option><option value='200'>200</option><option value='230'>230</option><option value='280'>280</option><option value='300'>300 </option><option value='320'>320</option><option value='500'>500</option><option value='AMG'>AMG</option><option value='E-Class'>E-Class</option><option value='S-Class'>S-Class</option>");
+              } else if (val == "فولفو") {
+                $("#model").html("<option value='24'>24</option><option value='240'>240</option><option value='440'>440</option><option value='460'>460</option>");
+              } else if (val == "فورد") {
+                $("#model").html("<option value='تيتانيوم'>تيتانيوم</option><option value='مونديو'>مونديو</option><option value='سييرا'>سييرا</option><option value='فوكس'>فوكس</option><option value='اسكورت'>اسكورت</option>");
+              } else if (val == "شيفروليه") {
+                $("#model").html("<option value='امبالا'>امبالا</option><option value='افيو'>افيو</option><option value='اوبترا'>اوبترا</option><option value='افلانش'>افلانش</option><option value='كروز'>كروز</option><option value='لومينا'>لومينا</option><option value='ماليبو'>ماليبو</option>");
+              } else if (val == "فيات") {
+                $("#model").html("<option value='بونتو'>بونتو</option><option value='فلوريدا'>فلوريدا</option><option value='باليو'>باليو</option><option value='لينيا'>لينيا</option>");
+              } else if (val == "أودي") {
+                $("#model").html("<option value='A3'>A3</option><option value='A4'>A4</option><option value='A6'>A6</option><option value='Q5'>Q5</option><option value='Q7'>Q7</option>");
+              } else if (val == "أوبل") {
+                $("#model").html("<option value='أسكونا'>أسكونا</option><option value='استرا'>استرا</option><option value='أوميغا'>أوميغا</option><option value='فيكترا'>فيكترا</option><option value='كاديت'>كاديت</option>");
+              } else if (val == "بروتون") {
+                $("#model").html("<option value='واجا'>واجا</option><option value='ويرا'>ويرا</option><option value='ساجا'>ساجا</option><option value='ارتيجا'>ارتيجا</option>");
+              } else if (val == "بورش") {
+                $("#model").html("<option value='كايين'>كايين</option><option value='كايمان'>كايمان</option><option value='كاريرا'>كاريرا</option>");
+              } else if (val == "BMW") {
+                $("#model").html("<option value='M5'>M5</option><option value='X3'>X3</option><option value='X5'>X5</option>");
+              } else if (val == "داسيا") {
+                $("#model").html("<option value='لوجان'>لوجان</option><option value='سولينزا'>سولينزا</option>");
+              } else if (val == "دايهاتسو") {
+                $("#model").html("<option value='تيريوس'>تيريوس</option><option value='سيريون'>سيريون</option>");
+              } else if (val == "رينو") {
+                $("#model").html("<option value='سانديرو'>سانديرو</option><option value='سيمبول'>سيمبول</option><option value='فلوانس'>فلوانس</option><option value='كليو'>كليو</option><option value='ميغان'>ميغان</option>");
+              } else if (val == "سكودا") {
+                $("#model").html("<option value='أوكتافيا'>أوكتافيا</option><option value='فابيا'>فابيا</option><option value='رومستر'>رومستر</option>");
+              } else if (val == "سوبارو") {
+                $("#model").html("<option value='امبريزا'>امبريزا</option><option value='ليجاسي'>ليجاسي</option>");
+              } else if (val == "سوزوكي") {
+                $("#model").html("<option value='سويفت'>سويفت</option><option value='ليانا'>ليانا</option><option value='ماروتي'>ماروتي</option>");
+              } else if (val == "سيامكو") {
+                $("#model").html("<option value='شام'>شام</option><option value='بالميرا'>بالميرا</option>");
+              } else if (val == "سيتروين") {
+                $("#model").html("<option value='C2'>C2</option><option value='C3'>C3</option><option value='C4'>C4</option><option value='C5'>C5</option><option value='كسانتيا'>كسانتيا</option>");
+              } else if (val == "فولكس فاجن") {
+                $("#model").html("<option value='بولو'>بولو</option><option value='باسات'>باسات</option><option value='شيروكو'>شيروكو</option><option value='غولف'>غولف</option><option value='بيتل'>بيتل</option>");
+              } else if (val == "لادا") {
+                $("#model").html("<option value='105'>105</option><option value='107'>107</option><option value='109'>109</option><option value='110'>110</option><option value='112'>112</option>");
+              } else if (val == "لاند روفر") {
+                $("#model").html("<option value='رانج روفر'>رانج روفر</option><option value='ديفيندر'>ديفيندر</option><option value='LR2'>LR2</option>");
+              } else if (val == "ميني") {
+                $("#model").html("<option value='كوبر'>كوبر</option><option value='ديفيندر'>ديفيندر</option><option value='LR2'>LR2</option>");
+              } else if (val == "همر") {
+                $("#model").html("<option value='H3'>H3</option>");
+              }
+
+            });
+          });
+        </script>
+
+        <div class="row mx-auto mb-2">
+
+          <select class="col mr-3 custom-select btn btn-dark select-style dp-width140" dir="rtl" name='production_year'
+            oninvalid="this.setCustomValidity('من فضلك اختر سنة الصنع')" oninput="setCustomValidity('')" required>
+            <option value='' selected>سنة الصنع</option>
+            <option value="2002">2002</option>
+            <option value="2003">2003</option>
+            <option value="2004">2004</option>
+            <option value="2005">2005</option>
+            <option value="2006">2006</option>
+            <option value="2007">2007</option>
+            <option value="2008">2008</option>
+            <option value="2009">2009</option>
+            <option value="2010">2010</option>
+            <option value="2011">2011</option>
+            <option value="2012">2012</option>
+            <option value="2013">2013</option>
+            <option value="2014">2014</option>
+            <option value="2015">2015</option>
+          </select>
+
+
+
+          <select class="col custom-select btn btn-dark select-style dp-width140" dir="rtl" name='place'
+            oninvalid="this.setCustomValidity('من فضلك اختر مكان السيارة')" oninput="setCustomValidity('')" required>
+            <option value='' selected>مكان السيارة</option>
+            <option value="طرطوس">طرطوس</option>
+            <option value="اللاذقية">اللاذقية</option>
+            <option value="حمص">حمص</option>
+            <option value="حلب">حلب</option>
+            <option value="دمشق">دمشق</option>
+            <option value="حماة">حماة</option>
+          </select>
+
+
+
+        </div>
+
+
+
+        <div class="row mx-auto mb-2">
+          <input name='kilometer' type="number" dir='rtl' style="width:140px" class="form-control mr-3" id="kilometer"
+            placeholder="الكيلومترات" oninvalid="this.setCustomValidity('من فضلك أدخل الكيلومترات')"
+            oninput="setCustomValidity('')" required>
+          <input name='price' type="number" style="width:140px" dir='rtl' class="form-control" id="price"
+            placeholder="السعر بالليرة" oninvalid="this.setCustomValidity('من فضلك أدخل السعر')"
+            oninput="setCustomValidity('')" required>
+        </div>
+
+
+
+
+      </div>
+    </div>
+
+    <!-- end col -->
+  </div>
+  <!-- end fisrt row -->
+
+
+  <!-- start second row -->
+  <div class="row">
+
+    <!-- start col -->
+    <div class="col-md-4">
+
+      <div class="card pt-2 pb-4 pr-4 mb-4">
+
+        <span class="search-text mx-auto mb-2">ميزات إضافية</span>
+
+        <div class="form-check ml-auto">
+          <label class="form-check-label" for="defaultCheck1">
+            نظام الملاحة
+          </label>
+          <input name='ef1' class="form-check-input-reverse" type="checkbox" value="نظام الملاحة" id="defaultCheck1">
+        </div>
+
+        <div class="form-check ml-auto">
+          <label class="form-check-label" for="defaultCheck1">
+            الدخول بدون مفتاح
+          </label>
+          <input name='ef2' class="form-check-input-reverse" type="checkbox" value="الدخول بدون مفتاح"
+            id="defaultCheck1">
+        </div>
+
+        <div class="form-check center ml-auto">
+          <label class="form-check-label" for="defaultCheck1">
+            فتحة السقف
+          </label>
+          <input name="ef3" class="form-check-input-reverse" type="checkbox" value="فتحة السقف" id="defaultCheck1">
+        </div>
+
+        <div class="form-check ml-auto">
+          <label class="form-check-label" for="defaultCheck1">
+            ABS فرامل
+          </label>
+          <input class="form-check-input-reverse" name="ef4" type="checkbox" value="ABS فرامل" id="defaultCheck1">
+        </div>
+
+        <div class="form-check ml-auto">
+          <label class="form-check-label" for="defaultCheck1">
+            وسائد هوائية
+          </label>
+          <input class="form-check-input-reverse" name="ef5" type="checkbox" value="وسائد هوائية" id="defaultCheck1">
+        </div>
+
+        <div class="form-check ml-auto">
+          <label class="form-check-label" for="defaultCheck1">
+            منظومة القطر
+          </label>
+          <input class="form-check-input-reverse" name="ef6" type="checkbox" value="منظومة القطر" id="defaultCheck1">
+        </div>
+
+
+
+
+
+
+
+
+      </div>
+
+    </div>
+    <!-- end col -->
+
+    <!-- start col -->
+    <div class="col-md-4">
+
+      <div class="card pt-2 pb-4 pr-4 mb-4">
+
+        <span class="search-text mx-auto mb-2">ميزات إضافية</span>
+
+        <div class="form-check ml-auto">
+          <label class="form-check-label" for="defaultCheck1">
+            بلوتوث
+          </label>
+          <input class="form-check-input-reverse" name="ef7" type="checkbox" value="بلوتوث" id="defaultCheck1">
+        </div>
+
+        <div class="form-check ml-auto">
+          <label class="form-check-label" for="defaultCheck1">
+            كاميرا خلفية
+          </label>
+          <input class="form-check-input-reverse" name="ef8" type="checkbox" value="كاميرا خلفية" id="defaultCheck1">
+        </div>
+
+        <div class="form-check ml-auto">
+          <label class="form-check-label" for="defaultCheck1">
+            ذاكرة المقاعد
+          </label>
+          <input class="form-check-input-reverse" name="ef9" type="checkbox" value="ذاكرة المقاعد" id="defaultCheck1">
+        </div>
+
+        <div class="form-check ml-auto">
+          <label class="form-check-label" for="defaultCheck1">
+            كشافات ضباب
+          </label>
+          <input class="form-check-input-reverse" name="ef10" type="checkbox" value="كشافات ضباب" id="defaultCheck1">
+        </div>
+
+        <div class="form-check ml-auto">
+          <label class="form-check-label" for="defaultCheck1">
+            أضواء زينون
+          </label>
+          <input class="form-check-input-reverse" name="ef11" type="checkbox" value="أضواء زينون" id="defaultCheck1">
+        </div>
+
+        <div class="form-check ml-auto">
+          <label class="form-check-label" for="defaultCheck1">
+            التشغيل بدون مفتاح
+          </label>
+          <input class="form-check-input-reverse" name="ef12" type="checkbox" value="التشغيل بدون مفتاح"
+            id="defaultCheck1">
+        </div>
+        <div class="form-check ml-auto">
+          <label class="form-check-label" for="defaultCheck1">
+            mp3/آيبود
+          </label>
+          <input class="form-check-input-reverse" name="ef13" type="checkbox" value="mp3/آيبود" id="defaultCheck1">
+        </div>
+
+      </div>
+
+    </div>
+    <!-- end col -->
+
+    <!-- start col -->
+    <div class="col-md-4">
+
+      <div class="card pt-2 pb-4 pr-4 mb-4">
+
+        <span class="search-text mx-auto mb-2">ميزات إضافية</span>
+
+        <div class="form-check ml-auto">
+          <label class="form-check-label" for="defaultCheck1">
+            جنط كروم
+          </label>
+          <input class="form-check-input-reverse" name="ef14" type="checkbox" value="جنط كروم" id="defaultCheck1">
+        </div>
+
+        <div class="form-check ml-auto">
+          <label class="form-check-label" for="defaultCheck1">
+            حساسات رجوع
+          </label>
+          <input class="form-check-input-reverse" name="ef15" type="checkbox" value="حساسات رجوع" id="defaultCheck1">
+        </div>
+
+        <div class="form-check ml-auto">
+          <label class="form-check-label" for="defaultCheck1">
+            نظام منع سرقة
+          </label>
+          <input class="form-check-input-reverse" name="ef16" type="checkbox" value="نظام منع سرقة" id="defaultCheck1">
+        </div>
+
+        <div class="form-check ml-auto">
+          <label class="form-check-label" for="defaultCheck1">
+            كراسي تبريد
+          </label>
+          <input class="form-check-input-reverse" name="ef17" type="checkbox" value="كراسي تبريد" id="defaultCheck1">
+        </div>
+
+        <div class="form-check ml-auto">
+          <label class="form-check-label" for="defaultCheck1">
+            مرايا كهربائية
+          </label>
+          <input class="form-check-input-reverse" name="ef18" type="checkbox" value="مرايا كهربائية" id="defaultCheck1">
+        </div>
+
+
+        <div class="form-check ml-auto">
+          <label class="form-check-label" for="defaultCheck1">
+            مثبت سرعة
+          </label>
+          <input class="form-check-input-reverse" name="ef19" type="checkbox" value="مثبت سرعة" id="defaultCheck1">
+        </div>
+        <div class="form-check ml-auto">
+          <label class="form-check-label" for="defaultCheck1">
+            كراسي جلد
+          </label>
+          <input class="form-check-input-reverse" name="ef20" type="checkbox" value="كراسي جلد" id="defaultCheck1">
+        </div>
+
+      </div>
+
+    </div>
+    <!-- end col -->
+
+  </div>
+
+  <!-- end second row -->
+
+  <!-- third row -->
+
+  <div class="row">
+    <div class="col">
+      <div class="card pb-4 pt-2 mb-4">
+        <!-- <form class="mx-auto"> -->
+        <!-- <div class="form-group"> -->
+        <span class="search-text center">يمكنك إدخال 10 صور</span>
+        <span class="search-text center mt-2 mb-4">الصورة الأولى هي الأساسية</span>
+        <div class="mx-auto">
+          <label class="btn btn-dark btn-file mx-auto">
+            <input name='images' type="file" style="display: none;" class="form-control-file center mt-2 mb-4"
+              multiple="multiple" id="exampleFormControlFile1" oninvalid="this.setCustomValidity('من فضلك أدخل الصور')"
+              oninput="setCustomValidity('')" required>
+            أدخل الصور</label>
+
+
+        </div>
+
+        <!-- </div> -->
+        <!-- </form> -->
+      </div>
+    </div>
+
+
+
+
+  </div>
+
+
+  <!-- end third row -->
+
+  <div class="row mb-4 pb-4 mx-auto">
+    <!-- 7 row -->
+
+
+
+    <button type="submit" value='submit' class="btn btn-outline-primary mx-auto">اعرض سيارتي</button>
+
+
+  </div> <!-- end 7 row -->
+
+</form>
+
+{% endblock content%}
+
+
+
+{% block footer%}
+
+<div class="footer pt-4 pb-4 mt-4">
+  <span class="footer-text center">All rights reserved</span>
+</div>
+
+
+{% endblock footer%}

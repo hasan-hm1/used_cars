@@ -1,0 +1,208 @@
+{% extends 'cars/base.html'%}
+{% load static %}
+
+
+{% block content%}
+
+<!-- to prevent resend post on refresh -->
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>
+
+
+
+
+{% if cars %}
+
+<form action="." method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+        <script src="{% static 'cars/js/jquery-1.11.1.min.js'%}"></script>
+        {% for car in cars%}
+
+        <div class="col-lg-4">
+            <div class="col mb-4">
+                <div class="card" style="width: 21rem;">
+                    <div class="image-under">
+                        <img src="{{ car.image0.url }}" class="card-img-top" alt="..." height="200">
+                        <div class="ml-auto comment-above-image">
+                            <label id='comment-label' class="heart-label">{{car.comment_set.count}}</label>
+                            <i class="fas fa-comments heart"></i>
+                        </div>
+
+
+
+                        {% if user in car.loves.all %}
+
+                        <div class="heart-above-image">
+                            <label id='l-{{ car.pk }}' class="heart-label"> {{car.loves.count}} </label>
+
+                            <i class="fas fa-heart heart" id='i-{{ car.pk }}' title="unlove"></i>
+                        </div>
+
+
+
+                        {% else %}
+                        <div class="heart-above-image">
+                            <label id='l-{{ car.pk }}' class="heart-label"> {{car.loves.count}} </label>
+                            <i class="far fa-heart heart" id='i-{{ car.pk }}' title="love"></i>
+                        </div>
+
+
+
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+
+
+
+
+                        <h4 class="card-title center">{{car.brand}} {{ car.model }}</h4>
+                        <span class="center font-mine">{{car.production_year}} : سنة الصنع</span>
+                        <span class="center font-mine">{{ car.kilometer}} : الكيلومترات</span>
+                        <span class="center price" dir="rtl"> {{ car.price }} ليرة</span><br>
+                        <div class="row">
+                            <button class="col-4 center btn btn-dark mx-auto" type="submit" value="{{ car.id }}"
+                                name='delete'>حذف</button>
+                            <a href="{% url 'car-details' car.id %}" class="col-4 btn btn-dark mx-auto">التفاصيل</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function () {
+
+
+                $('#i-{{ car.pk }}').click(function () {
+
+
+                    var value = $(this).attr("title");
+
+                    console.log(value);
+
+                    if (value == 'unlove') {
+                        data = {
+                            operation: 'unlove',
+                            id: '{{ car.pk }}',
+                            csrfmiddlewaretoken: $('input[name = csrfmiddlewaretoken]').val(),
+                        };
+                        console.log(data);
+                        $.ajax({
+                            type: 'POST',
+                            dataType: "json",
+                            async: true,
+                            url: "{% url 'love-unlove-toggle' %}",
+
+
+                            data: data,
+
+                            success: function (json) {
+
+                                $('#l-{{ car.pk }}').html(json.loves);
+
+
+                                $('#i-{{ car.pk }}').prop('title', 'love');
+                            },
+                            error: function () {
+
+                            }
+
+                        });
+
+                        $(this).removeClass('fas').addClass('far');
+
+                    } else {
+
+                        data = {
+                            operation: 'love',
+                            id: '{{ car.pk }}',
+                            csrfmiddlewaretoken: $('input[name = csrfmiddlewaretoken]').val(),
+                        };
+                        console.log(data);
+
+                        $.ajax({
+                            type: 'POST',
+                            dataType: "json",
+                            async: true,
+                            url: "{% url 'love-unlove-toggle' %}",
+
+
+                            data: data,
+
+                            success: function (json) {
+
+                                $('#l-{{ car.pk }}').html(json.loves);
+
+
+                                $('#i-{{ car.pk }}').prop('title', 'unlove');
+                            },
+                            error: function () {
+
+                            }
+
+                        });
+
+
+                        $(this).removeClass('far').addClass('fas');
+                    }
+
+
+                });
+
+
+            })
+
+
+
+        </script>
+
+        {% endfor %}
+    </div>
+</form>
+
+{% else %}
+
+
+<div class="row mt-4 pt-4">
+
+    <div class="col-md-8 mx-auto">
+        <div class="center  pt-4 pb-4 border-top border-bottom border-pink text-dark font-weight-bold font-size">
+            <small><a class="anchor-link mr-3" href="{% url 'cars-sell' %}">اعرض سيارتي</a></small>
+            <h5>لا يوجد سيارات</h5>
+        </div>
+    </div>
+</div>
+
+
+
+{% endif %}
+
+{% endblock content%}
+
+
+
+{% block footer%}
+
+{% if cars %}
+
+<div class="footer pt-4 pb-4 mt-4">
+    <span class="footer-text center">All rights reserved</span>
+</div>
+
+{% else %}
+
+<div class=" fixed-bottom">
+    <div class="footer pt-4 pb-4 mt-4">
+        <span class="footer-text center">All rights reserved</span>
+    </div>
+</div>
+
+
+{% endif %}
+
+{% endblock footer%}
