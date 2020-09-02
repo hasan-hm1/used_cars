@@ -5,7 +5,7 @@
 [see live](http://hasanmohammed.pythonanywhere.com/)
 
 #### Features
-- sell a car
+- offer a car for sale
 - browse cars for sale
 - price estimation (machine learning)
 - customize personal profile
