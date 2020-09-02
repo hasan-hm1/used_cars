@@ -5,10 +5,10 @@
 [see live](http://hasanmohammed.pythonanywhere.com/)
 
 #### Features
-  - sell a car
- - browse cars for sale
- - price estimation (machine learning)
- - customize personal profile
+- sell a car
+- browse cars for sale
+- price estimation (machine learning)
+- customize personal profile
 - add a car to favorite
 - browse car details and post a comment
 
@@ -18,5 +18,5 @@
 
 #### Frameworks and tools
 - Django (Backend)
-- BootStrap4 , Jquery  (FrontEnd)
+- BootStrap4 , Jquery , AJAX  (FrontEnd)
 - Machine Learning (Scikit-learn)
